@@ -10,6 +10,10 @@ URLS = {"EN": "https://raw.githubusercontent.com/jason-chao/wordle-solver/main/e
 
 # TODO still add more type hints
 # TODO return scores, maybe save them?
+# TODO add docstrings
+# TODO turn into module?
+# TODO unittesting ;-) ?
+# TODO think about what should be inside and/or outside of the class
 # ...
 
 
