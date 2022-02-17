@@ -8,6 +8,11 @@ import argparse
 
 URLS = {"EN": "https://raw.githubusercontent.com/jason-chao/wordle-solver/main/english_words_original_wordle.txt"}
 
+# TODO still add more type hints
+# TODO return scores, maybe save them?
+# ...
+
+
 class GuessedLetter:
     def __init__(self, letter: str, status: Literal['RED', 'YELLOW', 'GREEN']):
         self.status = status
@@ -39,6 +44,8 @@ class Wordle():
         self.solution = choice(self.words)
         self.max_attempts = attempts
         self.current_attempt = 0
+        # we need to initalize colorama as well
+        init()
 
     def _check_guess_valid(self, guess):
         if len(guess) != 5:
@@ -49,6 +56,7 @@ class Wordle():
             return False
         else:
             return True
+
     def _check_guess_correct(self, guess):
         result = []
         for i in range(len(guess)):
@@ -65,7 +73,8 @@ class Wordle():
         while True:
             if self.current_attempt == self.max_attempts:
                 print(f"You already had {self.max_attempts} guesses!")
-                return
+                print("So I guess you lost...")
+                break
             guessed = self.guess()
             if guessed:
                 print("CONGRATULATIONS!!")
@@ -90,12 +99,7 @@ if __name__=="__main__":
     args = parser.parse_args()
 
     print("Let's play wordle!")
-
-    init()
-
     wordle = Wordle()
-
     if args.cheat:
         print(f"Correct word (for testing): {wordle.solution}")
-
     wordle.play()
