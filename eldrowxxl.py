@@ -48,6 +48,7 @@ class Wordle():
         self.solution = choice(self.words)
         self.max_attempts = attempts
         self.current_attempt = 0
+        self.history = []
         # we need to initalize colorama as well
         init()
 
@@ -61,7 +62,8 @@ class Wordle():
         else:
             return True
 
-    def _check_guess_correct(self, guess):
+    def _check_guess_correct(self):
+        guess = self.history[-1]
         result = []
         for i in range(len(guess)):
             if guess[i]==self.solution[i]:
@@ -90,7 +92,8 @@ class Wordle():
             current_guess = input(f"[{self.current_attempt}] ")
             if self._check_guess_valid(current_guess):
                 break
-        evaluation = self._check_guess_correct(current_guess)
+        self.history.append(current_guess)
+        evaluation = self._check_guess_correct()
         render_result(evaluation)
         if sum([e.status=="GREEN" for e in evaluation]) == len(evaluation):
             return True
